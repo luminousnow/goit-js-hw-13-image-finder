@@ -951,7 +951,119 @@ module.exports = {
   STATIC_PATH: __dirname,
 };
 
-},{}],"../node_modules/handlebars/dist/handlebars.runtime.js":[function(require,module,exports) {
+},{}],"js/get-refs.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getRefs = getRefs;
+
+function getRefs() {
+  return {
+    form: document.querySelector('.search-form'),
+    imagesCollection: document.querySelector('.gallery'),
+    loadMoreBtn: document.querySelector('button')
+  };
+}
+},{}],"js/apiService.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ImageApi = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var BASE_URL = 'https://pixabay.com/api/';
+var API_KEY = '19092084-bc4ccb70eacd908f2d855c18b';
+
+var ImageApi = /*#__PURE__*/function () {
+  function ImageApi() {
+    _classCallCheck(this, ImageApi);
+
+    this.searchQuery = '';
+    this.page = 1;
+  }
+
+  _createClass(ImageApi, [{
+    key: "fetchImages",
+    value: function fetchImages() {
+      var _this = this;
+
+      // console.log(this);
+      var url = "".concat(BASE_URL, "?image_type=photo&orientation=horizontal&q=").concat(this.searchQuery, "&page=").concat(this.page, "&per_page=12&key=").concat(API_KEY);
+      return fetch(url).then(function (response) {
+        return response.json();
+      }).then(function (_ref) {
+        var hits = _ref.hits;
+
+        _this.incrementPage(); // console.log(hits);
+
+
+        return hits;
+      });
+    }
+  }, {
+    key: "incrementPage",
+    value: function incrementPage() {
+      this.page += 1;
+    }
+  }, {
+    key: "resetPage",
+    value: function resetPage() {
+      this.page = 1;
+    }
+  }, {
+    key: "query",
+    get: function get() {
+      return this.searchQuery;
+    },
+    set: function set(newQuery) {
+      this.searchQuery = newQuery;
+    }
+  }]);
+
+  return ImageApi;
+}();
+
+exports.ImageApi = ImageApi;
+},{}],"js/components/scroll-page.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.scrollPage = scrollPage;
+
+// скролить сторінку
+function scrollPage(position) {
+  window.scrollTo({
+    top: position,
+    behavior: 'smooth'
+  });
+}
+},{}],"js/components/clear-page-markup.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.clearPageMarkup = clearPageMarkup;
+
+var _getRefs = require("../get-refs");
+
+var refs = (0, _getRefs.getRefs)(); // очищує сторінку від розмітки
+
+function clearPageMarkup() {
+  refs.imagesCollection.innerHTML = '';
+}
+},{"../get-refs":"js/get-refs.js"}],"../node_modules/handlebars/dist/handlebars.runtime.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 /**!
@@ -3101,89 +3213,26 @@ var templateFunction = _handlebars.default.template({
 
 var _default = templateFunction;
 exports.default = _default;
-},{"handlebars/dist/handlebars.runtime":"../node_modules/handlebars/dist/handlebars.runtime.js"}],"js/get-refs.js":[function(require,module,exports) {
+},{"handlebars/dist/handlebars.runtime":"../node_modules/handlebars/dist/handlebars.runtime.js"}],"js/get-markup.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getRefs = getRefs;
+exports.appendImagesMarkup = appendImagesMarkup;
 
-function getRefs() {
-  return {
-    form: document.querySelector('.search-form'),
-    imagesCollection: document.querySelector('.gallery'),
-    loadMoreBtn: document.querySelector('button')
-  };
+var _imageCard = _interopRequireDefault(require("../templates/image-card.hbs"));
+
+var _getRefs = require("./get-refs");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var refs = (0, _getRefs.getRefs)(); // додає розмітку галереї зображень
+
+function appendImagesMarkup(images) {
+  refs.imagesCollection.insertAdjacentHTML('beforeend', (0, _imageCard.default)(images));
 }
-},{}],"js/apiService.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ImageApi = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var BASE_URL = 'https://pixabay.com/api/';
-var API_KEY = '19092084-bc4ccb70eacd908f2d855c18b';
-
-var ImageApi = /*#__PURE__*/function () {
-  function ImageApi() {
-    _classCallCheck(this, ImageApi);
-
-    this.searchQuery = '';
-    this.page = 1;
-  }
-
-  _createClass(ImageApi, [{
-    key: "fetchImages",
-    value: function fetchImages() {
-      var _this = this;
-
-      // console.log(this);
-      var url = "".concat(BASE_URL, "?image_type=photo&orientation=horizontal&q=").concat(this.searchQuery, "&page=").concat(this.page, "&per_page=12&key=").concat(API_KEY);
-      return fetch(url).then(function (response) {
-        return response.json();
-      }).then(function (_ref) {
-        var hits = _ref.hits;
-
-        _this.incrementPage(); // console.log(hits);
-
-
-        return hits;
-      });
-    }
-  }, {
-    key: "incrementPage",
-    value: function incrementPage() {
-      this.page += 1;
-    }
-  }, {
-    key: "resetPage",
-    value: function resetPage() {
-      this.page = 1;
-    }
-  }, {
-    key: "query",
-    get: function get() {
-      return this.searchQuery;
-    },
-    set: function set(newQuery) {
-      this.searchQuery = newQuery;
-    }
-  }]);
-
-  return ImageApi;
-}();
-
-exports.ImageApi = ImageApi;
-},{}],"index.js":[function(require,module,exports) {
+},{"../templates/image-card.hbs":"templates/image-card.hbs","./get-refs":"js/get-refs.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./scss/style.scss");
@@ -3192,13 +3241,15 @@ require("lazysizes");
 
 require("material-design-icons");
 
-var _imageCard = _interopRequireDefault(require("./templates/image-card.hbs"));
-
 var _getRefs = require("./js/get-refs");
 
 var _apiService = require("./js/apiService");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _scrollPage = require("./js/components/scroll-page");
+
+var _clearPageMarkup = require("./js/components/clear-page-markup");
+
+var _getMarkup = require("./js/get-markup");
 
 var position = 0;
 var refs = (0, _getRefs.getRefs)();
@@ -3224,8 +3275,8 @@ function onFetch(evt) {
         refs.loadMoreBtn.hidden = false;
       }
 
-      clearPageMarkup();
-      appendImagesMarkup(images);
+      (0, _clearPageMarkup.clearPageMarkup)();
+      (0, _getMarkup.appendImagesMarkup)(images);
     });
   }
 } // Фетч при кліку по кнопці "Load more"
@@ -3242,29 +3293,11 @@ function onFetchMore(evt) {
       refs.loadMoreBtn.hidden = false;
     }
 
-    appendImagesMarkup(images);
-    scrollPage(position);
+    (0, _getMarkup.appendImagesMarkup)(images);
+    (0, _scrollPage.scrollPage)(position);
   });
-} // додає розмітку галереї зображень
-
-
-function appendImagesMarkup(images) {
-  refs.imagesCollection.insertAdjacentHTML('beforeend', (0, _imageCard.default)(images));
-} // очищує сторінку від розмітки
-
-
-function clearPageMarkup() {
-  refs.imagesCollection.innerHTML = '';
-} // скролить сторінку
-
-
-function scrollPage(position) {
-  window.scrollTo({
-    top: position,
-    behavior: 'smooth'
-  });
-} // Додає кнопку "Load more"
-},{"./scss/style.scss":"scss/style.scss","lazysizes":"../node_modules/lazysizes/lazysizes.js","material-design-icons":"../node_modules/material-design-icons/index.js","./templates/image-card.hbs":"templates/image-card.hbs","./js/get-refs":"js/get-refs.js","./js/apiService":"js/apiService.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+}
+},{"./scss/style.scss":"scss/style.scss","lazysizes":"../node_modules/lazysizes/lazysizes.js","material-design-icons":"../node_modules/material-design-icons/index.js","./js/get-refs":"js/get-refs.js","./js/apiService":"js/apiService.js","./js/components/scroll-page":"js/components/scroll-page.js","./js/components/clear-page-markup":"js/components/clear-page-markup.js","./js/get-markup":"js/get-markup.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -3292,7 +3325,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51806" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53341" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
