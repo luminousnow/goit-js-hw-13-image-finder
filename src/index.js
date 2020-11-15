@@ -70,5 +70,3 @@ function scrollPage(position) {
     behavior: 'smooth',
   });
 }
-
-// Додає кнопку "Load more"
