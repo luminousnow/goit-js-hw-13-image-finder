@@ -29,9 +29,9 @@ function onFetch(evt) {
     imageApi.resetPage();
     imageApi.fetchImages().then(images => {
       console.log(images.length);
-      if (images.length >= 12) {
-        refs.loadMoreBtn.hidden = false;
-      }
+      if (images.length < 12) {
+        refs.loadMoreBtn.classList.add('is-hidden');
+      } else refs.loadMoreBtn.classList.remove('is-hidden');
       clearPageMarkup();
       appendImagesMarkup(images);
     });
@@ -47,9 +47,9 @@ function onFetchMore(evt) {
   position = refs.imagesCollection.offsetHeight;
 
   imageApi.fetchImages().then(images => {
-    if (images.length >= 12) {
-      refs.loadMoreBtn.hidden = false;
-    }
+    if (images.length < 12) {
+      refs.loadMoreBtn.classList.add('is-hidden');
+    } else refs.loadMoreBtn.classList.remove('is-hidden');
     appendImagesMarkup(images);
     scrollPage(position);
   });
