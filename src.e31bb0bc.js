@@ -3203,6 +3203,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var position = 0;
 var refs = (0, _getRefs.getRefs)();
 var imageApi = new _apiService.ImageApi();
+console.dir(refs.loadMoreBtn);
 refs.form.addEventListener('keypress', onFetch);
 refs.loadMoreBtn.addEventListener('click', onFetchMore); // Фетч при першому запиті
 
@@ -3217,6 +3218,12 @@ function onFetch(evt) {
 
     imageApi.resetPage();
     imageApi.fetchImages().then(function (images) {
+      console.log(images.length);
+
+      if (images.length >= 12) {
+        refs.loadMoreBtn.hidden = false;
+      }
+
       clearPageMarkup();
       appendImagesMarkup(images);
     });
@@ -3231,6 +3238,10 @@ function onFetchMore(evt) {
 
   position = refs.imagesCollection.offsetHeight;
   imageApi.fetchImages().then(function (images) {
+    if (images.length >= 12) {
+      refs.loadMoreBtn.hidden = false;
+    }
+
     appendImagesMarkup(images);
     scrollPage(position);
   });
@@ -3252,7 +3263,7 @@ function scrollPage(position) {
     top: position,
     behavior: 'smooth'
   });
-}
+} // Додає кнопку "Load more"
 },{"./scss/style.scss":"scss/style.scss","lazysizes":"../node_modules/lazysizes/lazysizes.js","material-design-icons":"../node_modules/material-design-icons/index.js","./templates/image-card.hbs":"templates/image-card.hbs","./js/get-refs":"js/get-refs.js","./js/apiService":"js/apiService.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -3281,7 +3292,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59405" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51806" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
