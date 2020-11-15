@@ -9,6 +9,8 @@ let position = 0;
 const refs = getRefs();
 const imageApi = new ImageApi();
 
+console.dir(refs.loadMoreBtn);
+
 refs.form.addEventListener('keypress', onFetch);
 refs.loadMoreBtn.addEventListener('click', onFetchMore);
 
@@ -24,6 +26,10 @@ function onFetch(evt) {
 
     imageApi.resetPage();
     imageApi.fetchImages().then(images => {
+      console.log(images.length);
+      if (images.length >= 12) {
+        refs.loadMoreBtn.hidden = false;
+      }
       clearPageMarkup();
       appendImagesMarkup(images);
     });
@@ -39,6 +45,9 @@ function onFetchMore(evt) {
   position = refs.imagesCollection.offsetHeight;
 
   imageApi.fetchImages().then(images => {
+    if (images.length >= 12) {
+      refs.loadMoreBtn.hidden = false;
+    }
     appendImagesMarkup(images);
     scrollPage(position);
   });
@@ -61,3 +70,5 @@ function scrollPage(position) {
     behavior: 'smooth',
   });
 }
+
+// Додає кнопку "Load more"
