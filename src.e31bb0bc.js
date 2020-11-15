@@ -3200,6 +3200,7 @@ var _apiService = require("./js/apiService");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var position = 0;
 var refs = (0, _getRefs.getRefs)();
 var imageApi = new _apiService.ImageApi();
 refs.form.addEventListener('keypress', onFetch);
@@ -3212,7 +3213,9 @@ function onFetch(evt) {
 
     if (imageApi.query === '') {
       return alert('Поле запроса пустое. Введите запрос и нажмите "Enter"');
-    }
+    } // position = refs.imagesCollection.offsetHeight;
+    // console.log('position onFetch', position);
+
 
     imageApi.resetPage();
     imageApi.fetchImages().then(function (images) {
@@ -3228,9 +3231,11 @@ function onFetchMore(evt) {
     return alert('Сначала введите запрос в и нажмите "Enter"');
   }
 
+  position = refs.imagesCollection.offsetHeight;
+  console.log('position onFetchMore', position);
   imageApi.fetchImages().then(function (images) {
     appendImagesMarkup(images);
-    scrollPage();
+    scrollPage(position);
   });
 } // додає розмітку галереї зображень
 
@@ -3245,10 +3250,10 @@ function clearPageMarkup() {
 } // скролить сторінку
 
 
-function scrollPage() {
+function scrollPage(position) {
   // window.scrollBy(0, -350);
   window.scrollTo({
-    top: document.body.scrollHeight - 100,
+    top: position,
     behavior: 'smooth'
   });
 }
@@ -3280,7 +3285,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53321" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54045" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
