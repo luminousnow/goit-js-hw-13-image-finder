@@ -22,9 +22,6 @@ function onFetch(evt) {
       return alert('Поле запроса пустое. Введите запрос и нажмите "Enter"');
     }
 
-    // position = refs.imagesCollection.offsetHeight;
-    // console.log('position onFetch', position);
-
     imageApi.resetPage();
     imageApi.fetchImages().then(images => {
       clearPageMarkup();
@@ -40,7 +37,6 @@ function onFetchMore(evt) {
   }
 
   position = refs.imagesCollection.offsetHeight;
-  console.log('position onFetchMore', position);
 
   imageApi.fetchImages().then(images => {
     appendImagesMarkup(images);
@@ -60,7 +56,6 @@ function clearPageMarkup() {
 
 // скролить сторінку
 function scrollPage(position) {
-  // window.scrollBy(0, -350);
   window.scrollTo({
     top: position,
     behavior: 'smooth',
