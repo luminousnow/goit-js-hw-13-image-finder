@@ -3271,9 +3271,9 @@ function onFetch(evt) {
     imageApi.fetchImages().then(function (images) {
       console.log(images.length);
 
-      if (images.length >= 12) {
-        refs.loadMoreBtn.hidden = false;
-      }
+      if (images.length < 12) {
+        refs.loadMoreBtn.classList.add('is-hidden');
+      } else refs.loadMoreBtn.classList.remove('is-hidden');
 
       (0, _clearPageMarkup.clearPageMarkup)();
       (0, _getMarkup.appendImagesMarkup)(images);
@@ -3289,9 +3289,9 @@ function onFetchMore(evt) {
 
   position = refs.imagesCollection.offsetHeight;
   imageApi.fetchImages().then(function (images) {
-    if (images.length >= 12) {
-      refs.loadMoreBtn.hidden = false;
-    }
+    if (images.length < 12) {
+      refs.loadMoreBtn.classList.add('is-hidden');
+    } else refs.loadMoreBtn.classList.remove('is-hidden');
 
     (0, _getMarkup.appendImagesMarkup)(images);
     (0, _scrollPage.scrollPage)(position);
@@ -3325,7 +3325,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53341" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63974" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

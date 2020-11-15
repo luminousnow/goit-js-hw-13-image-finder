@@ -4,6 +4,8 @@ body {
 
 ul {
   padding: 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .conteiner {
@@ -42,6 +44,10 @@ form {
 .image {
   min-height: 300px;
   width: 100%;
+}
+
+.is-hidden {
+  display: none;
 }
 
 /*# sourceMappingURL=/src.e31bb0bc.css.map */
