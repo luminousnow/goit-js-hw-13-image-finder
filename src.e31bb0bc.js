@@ -3248,7 +3248,7 @@ function clearPageMarkup() {
 function scrollPage() {
   // window.scrollBy(0, -350);
   window.scrollTo({
-    top: document.body.scrollHeight,
+    top: document.body.scrollHeight - 100,
     behavior: 'smooth'
   });
 }
@@ -3280,7 +3280,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49792" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53162" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
