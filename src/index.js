@@ -1,9 +1,11 @@
 import './scss/style.scss';
 import 'lazysizes';
 import 'material-design-icons';
-import imageCardTpl from './templates/image-card.hbs';
 import { getRefs } from './js/get-refs';
 import { ImageApi } from './js/apiService';
+import { scrollPage } from './js/components/scroll-page';
+import { clearPageMarkup } from './js/components/clear-page-markup';
+import { appendImagesMarkup } from './js/get-markup';
 
 let position = 0;
 const refs = getRefs();
@@ -50,23 +52,5 @@ function onFetchMore(evt) {
     }
     appendImagesMarkup(images);
     scrollPage(position);
-  });
-}
-
-// додає розмітку галереї зображень
-function appendImagesMarkup(images) {
-  refs.imagesCollection.insertAdjacentHTML('beforeend', imageCardTpl(images));
-}
-
-// очищує сторінку від розмітки
-function clearPageMarkup() {
-  refs.imagesCollection.innerHTML = '';
-}
-
-// скролить сторінку
-function scrollPage(position) {
-  window.scrollTo({
-    top: position,
-    behavior: 'smooth',
   });
 }
