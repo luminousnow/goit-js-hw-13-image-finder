@@ -56,7 +56,7 @@ function clearPageMarkup() {
 function scrollPage() {
   // window.scrollBy(0, -350);
   window.scrollTo({
-    top: document.body.scrollHeight,
+    top: document.body.scrollHeight - 100,
     behavior: 'smooth',
   });
 }
