@@ -5,8 +5,8 @@ import imageCardTpl from './templates/image-card.hbs';
 import { getRefs } from './js/get-refs';
 import { ImageApi } from './js/apiService';
 
+let position = 0;
 const refs = getRefs();
-
 const imageApi = new ImageApi();
 
 refs.form.addEventListener('keypress', onFetch);
@@ -22,6 +22,9 @@ function onFetch(evt) {
       return alert('Поле запроса пустое. Введите запрос и нажмите "Enter"');
     }
 
+    // position = refs.imagesCollection.offsetHeight;
+    // console.log('position onFetch', position);
+
     imageApi.resetPage();
     imageApi.fetchImages().then(images => {
       clearPageMarkup();
@@ -36,9 +39,12 @@ function onFetchMore(evt) {
     return alert('Сначала введите запрос в и нажмите "Enter"');
   }
 
+  position = refs.imagesCollection.offsetHeight;
+  console.log('position onFetchMore', position);
+
   imageApi.fetchImages().then(images => {
     appendImagesMarkup(images);
-    scrollPage();
+    scrollPage(position);
   });
 }
 
@@ -53,10 +59,10 @@ function clearPageMarkup() {
 }
 
 // скролить сторінку
-function scrollPage() {
+function scrollPage(position) {
   // window.scrollBy(0, -350);
   window.scrollTo({
-    top: document.documentElement.clientHeight - 100,
+    top: position,
     behavior: 'smooth',
   });
 }
