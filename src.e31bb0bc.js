@@ -3213,9 +3213,7 @@ function onFetch(evt) {
 
     if (imageApi.query === '') {
       return alert('Поле запроса пустое. Введите запрос и нажмите "Enter"');
-    } // position = refs.imagesCollection.offsetHeight;
-    // console.log('position onFetch', position);
-
+    }
 
     imageApi.resetPage();
     imageApi.fetchImages().then(function (images) {
@@ -3232,7 +3230,6 @@ function onFetchMore(evt) {
   }
 
   position = refs.imagesCollection.offsetHeight;
-  console.log('position onFetchMore', position);
   imageApi.fetchImages().then(function (images) {
     appendImagesMarkup(images);
     scrollPage(position);
@@ -3251,7 +3248,6 @@ function clearPageMarkup() {
 
 
 function scrollPage(position) {
-  // window.scrollBy(0, -350);
   window.scrollTo({
     top: position,
     behavior: 'smooth'
@@ -3285,7 +3281,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54045" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59405" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
