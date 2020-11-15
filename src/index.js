@@ -54,5 +54,9 @@ function clearPageMarkup() {
 
 // скролить сторінку
 function scrollPage() {
-  window.scrollBy(0, -350);
+  // window.scrollBy(0, -350);
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth',
+  });
 }
