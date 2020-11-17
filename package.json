@@ -9,6 +9,7 @@
     "deploy": "gh-pages -d dist",
     "predeploy": "npm run build"
   },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/luminousnow/goit-js-hw-13-image-finder.git"
